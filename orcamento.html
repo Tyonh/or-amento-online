@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulário de Orçamento Dinâmico</title>
+
+    <link rel="stylesheet" href="orcamento.css" />
+  </head>
+  <body>
+    <h1>Gerador de Orçamento</h1>
+    <p>Preencha as informações abaixo para criar um novo orçamento.</p>
+
+    <form action="/salvar-orcamento" method="POST">
+      <fieldset>
+        <legend>Dados do Cliente</legend>
+        <div>
+          <label for="cliente_nome">Nome do Cliente:</label>
+          <input
+            type="text"
+            id="cliente_nome"
+            name="cliente_nome"
+            placeholder="Ex: João da Silva"
+            required />
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Itens do Orçamento</legend>
+
+        <div id="lista-produtos"></div>
+
+        <button type="button" id="btn-adicionar-produto">
+          + Adicionar Produto
+        </button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Condições Comerciais</legend>
+        <div>
+          <label for="condicao_pagamento">Condição de Pagamento:</label>
+          <select id="condicao_pagamento" name="condicao_pagamento">
+            <option value="">-- Selecione --</option>
+            <option value="avista">À vista</option>
+            <option value="30d">Cartao de Credito</option>
+            <option value="60d">Boleto</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <div>
+        <button type="submit">Gerar Orçamento</button>
+      </div>
+    </form>
+
+    <template id="template-produto">
+      <div class="item-produto">
+        <button type="button" class="btn-remover">Remover</button>
+
+        <div>
+          <label>Produto/Serviço:</label>
+          <input
+            type="text"
+            name="produto_nome[]"
+            placeholder="Ex: Luminaria 3G"
+            required />
+        </div>
+
+        <div>
+          <label>Valor Unitário (R$):</label>
+          <input
+            type="number"
+            name="valor_unitario[]"
+            min="0.01"
+            step="0.01"
+            placeholder="150.00"
+            required />
+        </div>
+
+        <div>
+          <label>Quantidade:</label>
+          <input
+            type="number"
+            name="quantidade[]"
+            min="1"
+            step="1"
+            value="1"
+            required />
+        </div>
+      </div>
+    </template>
+
+    <script src="orcamento.js" defer></script>
+  </body>
+</html>
