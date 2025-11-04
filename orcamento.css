@@ -104,3 +104,41 @@ button:hover {
 .btn-remover:hover {
   background-color: #c82333;
 }
+
+/* --- ESTILOS PARA O AUTOCOMPLETE --- */
+
+/* A caixa flutuante */
+.autocomplete-sugestoes {
+  position: absolute; /* Posição flutuante */
+  border: 1px solid #ddd;
+  background-color: #fff;
+  max-height: 200px; /* Altura máxima, depois ganha scroll */
+  overflow-y: auto;
+  z-index: 1000; /* Fica por cima de tudo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 4px 4px;
+}
+
+/* Cada item dentro da caixa */
+.autocomplete-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+/* Efeito ao passar o mouse */
+.autocomplete-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Último item sem borda */
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+/* Mensagem de "nenhum encontrado" */
+.autocomplete-item-empty {
+  padding: 10px;
+  color: #777;
+  font-style: italic;
+}
