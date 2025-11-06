@@ -37,6 +37,42 @@
 
       <fieldset>
         <legend>Condições Comerciais</legend>
+
+        <div>
+          <label for="vendedor">Vendedor:</label>
+          <select id="vendedor" name="vendedor" required>
+            <option value="">-- Selecione o Vendedor --</option>
+            <option
+              value='{
+              "nome": "Marcondes Mateus",
+              "email": "vendas1@3giluminacao.com.br",
+              "fone": "(85) 99953-4394"
+            }'>
+              Marcondes Mateus
+            </option>
+
+            <option
+              value='{
+              "nome": "Aldoberto Pinheiro",
+              "email":"gerencia.grupo3g@gmail.com",
+              "fone": "(85) 98119-8477"
+            }'>
+              Aldoberto Pinheiro
+            </option>
+            <option
+              value='{
+              "nome": "Bruno Windson",
+              "email": "vendas3@3giluminacao.com.br",
+              "fone": "(85) 98839-4344"
+            }'>
+              Bruno Windson
+            </option>
+            <option value="Vendedor 3">Rafael</option>
+            <option value="Vendedor 3">Nadia</option>
+            <option value="Vendedor 3">Cleide</option>
+            <option value="Vendedor 3">Jon</option>
+          </select>
+        </div>
         <div>
           <label for="condicao_pagamento">Condição de Pagamento:</label>
           <select id="condicao_pagamento" name="condicao_pagamento">
@@ -71,7 +107,7 @@
         <button type="button" class="btn-remover">Remover</button>
 
         <div>
-          <label>Produto/Serviço:</label>
+          <label>Produto:</label>
           <input
             type="text"
             name="produto_nome[]"

@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const templateProduto = document.getElementById("template-produto");
 
   // 1. Função utilitária "Debounce"
-  // (Evita uma chamada à API a cada tecla pressionada)
   function debounce(func, delay) {
     let timeoutId;
     return function (...args) {
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 2. Variável para guardar o <div> flutuante de sugestões
   let sugestoesDiv = null;
 
-  // 3. Função que BUSCA na API
+  // 3. Função que BUSCA na API (Produtos)
   async function fetchSugestoes(termo, inputElement) {
     if (termo.length < 2) {
       limparSugestoes();
@@ -28,15 +27,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      // Faz a chamada ao nosso backend (que agora usa SQLite)
+      // --- SUBSTITUIÇÃO AQUI ---
+      // URL agora é relativa para funcionar no Vercel
       const response = await fetch(
         `http://localhost:3000/api/produtos/search?search=${encodeURIComponent(
           termo
         )}`
       );
+      // --- FIM DA SUBSTITUIÇÃO ---
+
       if (!response.ok) return;
 
       const produtos = await response.json();
+      // (Presume que a API retorna: [ { codigo: "123", nome: "Desc..." } ])
       exibirSugestoes(produtos, inputElement);
     } catch (error) {
       console.error("Erro ao buscar sugestões:", error);
@@ -55,11 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
+      // --- SUBSTITUIÇÃO AQUI ---
+      // URL agora é relativa para funcionar no Vercel
       const response = await fetch(
-        `http://localhost:3000/api/clientes/search?search=${encodeURIComponent(
-          termo
-        )}`
+        `/api/clientes/search?search=${encodeURIComponent(termo)}`
       );
+      // --- FIM DA SUBSTITUIÇÃO ---
+
       if (!response.ok) return;
 
       const clientes = await response.json();
@@ -75,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     300
   );
 
-  // 5. Função que MOSTRA o <div> de sugestões
+  // 5. Função que MOSTRA o <div> de sugestões (Produtos)
   function exibirSugestoes(produtos, inputElement) {
     limparSugestoes(); // Limpa sugestões antigas
 
@@ -102,16 +107,20 @@ document.addEventListener("DOMContentLoaded", function () {
     produtos.forEach((produto) => {
       const itemDiv = document.createElement("div");
       itemDiv.className = "autocomplete-item";
-      itemDiv.textContent = produto.nome;
+
+      // --- SUBSTITUIÇÃO AQUI ---
+      // Mostra "Codigo - Nome"
+      itemDiv.textContent = `${produto.codigo} - ${produto.nome}`;
+      // --- FIM DA SUBSTITUIÇÃO ---
 
       // *** A MÁGICA ACONTECE AQUI ***
+      // --- SUBSTITUIÇÃO AQUI ---
       // Define o que acontece ao CLICAR numa sugestão
       itemDiv.onclick = () => {
-        // 1. Preenche o input de nome com o nome do produto
-        inputElement.value = produto.nome;
+        // 1. Preenche o input de nome com o texto combinado
+        inputElement.value = `${produto.codigo} - ${produto.nome}`;
 
         // 2. Encontra o input de valor "irmão" desta linha
-        // (Usamos .closest() para achar o 'pai' da linha)
         const linhaProduto = inputElement.closest(".item-produto");
 
         if (linhaProduto) {
@@ -121,13 +130,14 @@ document.addEventListener("DOMContentLoaded", function () {
           );
 
           if (inputValor) {
-            // 4. Preenchemos o valor com o preço do produto
-            inputValor.value = parseFloat(produto.valor).toFixed(2);
+            // 4. Apenas foca no campo de valor (pois não temos o preço)
+            inputValor.focus();
           }
         }
 
         limparSugestoes(); // Fecha a caixa de sugestões
       };
+      // --- FIM DA SUBSTITUIÇÃO ---
 
       sugestoesDiv.appendChild(itemDiv);
     });
@@ -205,9 +215,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Se o clique NÃO foi dentro da caixa de sugestões
     // E NÃO foi num input de produto, fechamos a caixa.
     const clicouInput = event.target.closest("input[name='produto_nome[]']");
+    const clicouInputCliente = event.target.closest("#cliente_nome");
     const clicouSugestao = event.target.closest(".autocomplete-sugestoes");
 
-    if (!clicouInput && !clicouSugestao) {
+    if (!clicouInput && !clicouSugestao && !clicouInputCliente) {
       limparSugestoes();
     }
   });
