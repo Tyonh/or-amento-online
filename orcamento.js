@@ -27,14 +27,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      // --- SUBSTITUIÇÃO AQUI ---
-      // URL agora é relativa para funcionar no Vercel
       const response = await fetch(
         `http://localhost:3000/api/produtos/search?search=${encodeURIComponent(
           termo
         )}`
       );
-      // --- FIM DA SUBSTITUIÇÃO ---
 
       if (!response.ok) return;
 
@@ -58,12 +55,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      // --- SUBSTITUIÇÃO AQUI ---
-      // URL agora é relativa para funcionar no Vercel
       const response = await fetch(
-        `/api/clientes/search?search=${encodeURIComponent(termo)}`
+        `http://localhost:3000/api/clientes/search?search=${encodeURIComponent(
+          termo
+        )}`
       );
-      // --- FIM DA SUBSTITUIÇÃO ---
 
       if (!response.ok) return;
 
@@ -108,14 +104,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const itemDiv = document.createElement("div");
       itemDiv.className = "autocomplete-item";
 
-      // --- SUBSTITUIÇÃO AQUI ---
-      // Mostra "Codigo - Nome"
       itemDiv.textContent = `${produto.codigo} - ${produto.nome}`;
-      // --- FIM DA SUBSTITUIÇÃO ---
 
-      // *** A MÁGICA ACONTECE AQUI ***
-      // --- SUBSTITUIÇÃO AQUI ---
-      // Define o que acontece ao CLICAR numa sugestão
       itemDiv.onclick = () => {
         // 1. Preenche o input de nome com o texto combinado
         inputElement.value = `${produto.codigo} - ${produto.nome}`;
@@ -137,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         limparSugestoes(); // Fecha a caixa de sugestões
       };
-      // --- FIM DA SUBSTITUIÇÃO ---
 
       sugestoesDiv.appendChild(itemDiv);
     });
