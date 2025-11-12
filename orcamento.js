@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const btnAdicionar = document.getElementById("btn-adicionar-produto");
   const listaProdutos = document.getElementById("lista-produtos");
   const templateProduto = document.getElementById("template-produto");
+  const form = document.getElementById("form-orcamento");
 
+  const API_URL = "http://localhost:3000";
   // 1. Função utilitária "Debounce"
   function debounce(func, delay) {
     let timeoutId;
@@ -15,6 +17,69 @@ document.addEventListener("DOMContentLoaded", function () {
       }, delay);
     };
   }
+
+  // ...
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault(); // Evita o envio padrão
+
+    // --- CORREÇÃO AQUI: Serialização manual para suportar arrays ---
+    const formData = new FormData(form);
+    const dados = {};
+
+    // Iterar sobre todos os pares chave/valor do FormData
+    for (const [key, value] of formData.entries()) {
+      // 1. Verificar se a chave termina com '[]' (indicando um array de itens)
+      if (key.endsWith("[]")) {
+        const cleanKey = key.slice(0, -2); // Remove o '[]'
+
+        // Inicializa o array se ele não existir
+        if (!dados[cleanKey]) {
+          dados[cleanKey] = [];
+        }
+        // Adiciona o valor ao array
+        dados[cleanKey].push(value);
+      } else {
+        // 2. Para chaves normais (cliente_nome, vendedor, etc.), atribui o valor
+        dados[key] = value;
+      }
+    }
+    // --- FIM DA CORREÇÃO ---
+
+    // console.log(JSON.stringify(dados, null, 2)); // Use para debug no console do navegador
+
+    try {
+      const response = await fetch(`${API_URL}/salvar-orcamento`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados), // Agora 'dados' é um JSON com arrays
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          "Erro ao gerar orçamento: " +
+            (errorData.details || "Verifique o console.")
+        );
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "orcamento.xlsx"; // nome sugerido
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      // libera memória
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert("Erro: " + err.message);
+      console.error(err);
+    }
+  });
+  // ...
 
   // 2. Variável para guardar o <div> flutuante de sugestões
   let sugestoesDiv = null;
@@ -28,9 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/produtos/search?search=${encodeURIComponent(
-          termo
-        )}`
+        `${API_URL}/api/produtos/search?search=${encodeURIComponent(termo)}`
       );
 
       if (!response.ok) return;
@@ -56,9 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/clientes/search?search=${encodeURIComponent(
-          termo
-        )}`
+        `${API_URL}/api/clientes/search?search=${encodeURIComponent(termo)}`
       );
 
       if (!response.ok) return;
