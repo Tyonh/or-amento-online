@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const templateProduto = document.getElementById("template-produto");
   const form = document.getElementById("form-orcamento");
 
-  const API_URL = "http://api.grupo3giluminacao.com.br";
+  const API_URL = "http://localhost:3000";
   // 1. Função utilitária "Debounce"
   function debounce(func, delay) {
     let timeoutId;
