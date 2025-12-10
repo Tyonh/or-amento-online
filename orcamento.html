@@ -21,7 +21,8 @@
             id="cliente_nome"
             name="cliente_nome"
             placeholder="Ex: João da Silva"
-            required />
+            required
+            autocomplete="off" />
         </div>
       </fieldset>
 
@@ -43,51 +44,23 @@
           <select id="vendedor" name="vendedor" required>
             <option value="">-- Selecione o Vendedor --</option>
             <option
-              value='{
-              "nome": "Marcondes Mateus",
-              "email": "vendas1@3giluminacao.com.br",
-              "fone": "(85) 99953-4394"
-            }'>
+              value='{"nome": "Marcondes Mateus", "imagem": "MARCONDES.png"}'>
               Marcondes Mateus
             </option>
             <option
-              value='{
-              "nome": "Aldoberto Pinheiro",
-              "email":"gerencia.grupo3g@gmail.com",
-              "fone": "(85) 98119-8477"
-            }'>
+              value='{"nome": "Aldoberto Pinheiro", "imagem": "PINHEIRO.png"}'>
               Aldoberto Pinheiro
             </option>
-            <option
-              value='{
-              "nome": "Bruno Windson",
-              "email": "vendas3@3giluminacao.com.br",
-              "fone": "(85) 98839-4344"
-            }'>
+            <option value='{"nome": "Bruno Windson", "imagem": "BRUNO.png"}'>
               Bruno Windson
             </option>
-            <option
-              value='{
-              "nome": "Cleidy Cordeiro",
-              "email": "cleidy@3giluminacao.com.br",
-              "fone": "(85) 999373462"
-            }'>
+            <option value='{"nome": "Cleide Cordeiro", "imagem": "CLEIDY.png"}'>
               Cleide Cordeiro
             </option>
-            <option
-              value='{
-              "nome": "Nadia Rodrigues",
-              "email": "nadia@3giluminacao.com.br",
-              "fone": "(85) 999534394"
-            }'>
+            <option value='{"nome": "Nadia Rodrigues", "imagem": "NADIA.png"}'>
               Nadia Rodrigues
             </option>
-            <option
-              value='{
-              "nome": "Johns Alexandre",
-              "email": "vendas2@3giluminacao.com.br",
-              "fone": "(85) 984434800 ou (85)988774041"
-            }'>
+            <option value='{"nome": "Johns Alexandre", "imagem": "JOHNS.png"}'>
               Johns Alexandre
             </option>
           </select>
@@ -96,18 +69,26 @@
           <label for="condicao_pagamento">Condição de Pagamento:</label>
           <select id="condicao_pagamento" name="condicao_pagamento">
             <option value="">-- Selecione --</option>
-            <option value="avista">À vista</option>
-            <option value="30d">Boleto - 30d</option>
-            <option value="30/60d">Boleto - 30/60d</option>
-            <option value="30/60/90d">Boleto - 30/60/90d</option>
-            <option value="30/60/90/120d">Boleto - 30/60/90/120d</option>
+            <option value="À vista">À vista</option>
+            <option value="Boleto - 30d">Boleto - 30d</option>
+            <option value="Boleto - 30/60d">Boleto - 30/60d</option>
+            <option value="Boleto - 30/60/90d">Boleto - 30/60/90d</option>
+            <option value="Boleto - 30/60/90/120d">
+              Boleto - 30/60/90/120d
+            </option>
             <option value="Cartao de Debito">Cartao de Debito</option>
             <option value="Cartao de Credito S/Juros">
               Cartao de Credito S/Juros
             </option>
-            <option value="Cartao 1x/Juros">Cartao de Credito 1x/Juros</option>
-            <option value="Cartao 2x/Juros">Cartao de Credito 2x/Juros</option>
-            <option value="Cartao 3x/Juros">Cartao de Credito 3x/Juros</option>
+            <option value="Cartao de Credito 1x/Juros">
+              Cartao de Credito 1x/Juros
+            </option>
+            <option value="Cartao de Credito 2x/Juros">
+              Cartao de Credito 2x/Juros
+            </option>
+            <option value="Cartao de Credito 3x/Juros">
+              Cartao de Credito 3x/Juros
+            </option>
             <option value="Boleto - c/Entrada">Boleto - c/Entrada</option>
             <option value="Cartao de Debito c/Entrada">
               Cartao de Debito c/Entrada
@@ -115,17 +96,7 @@
           </select>
         </div>
       </fieldset>
-      <div class="form-group">
-        <label for="formato_download">Formato de Download:</label>
-        <select
-          id="formato_download"
-          name="formato_download"
-          class="form-control"
-          required>
-          <option value="excel">Excel (.xlsx)</option>
-          <option value="pdf">PDF (.pdf)</option>
-        </select>
-      </div>
+
       <div>
         <button type="submit">Gerar Orçamento</button>
       </div>
@@ -141,7 +112,8 @@
             type="text"
             name="produto_nome[]"
             placeholder="Ex: Luminaria 3G"
-            required />
+            required
+            autocomplete="off" />
         </div>
 
         <div>

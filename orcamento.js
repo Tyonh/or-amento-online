@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const a = document.createElement("a");
       a.href = url;
-      a.download = "orcamento.xlsx"; // nome sugerido
+      a.download = "orcamento.pdf"; // nome sugerido
       document.body.appendChild(a);
       a.click();
       a.remove();
